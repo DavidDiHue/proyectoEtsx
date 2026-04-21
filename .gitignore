@@ -1,0 +1,20 @@
+# Entornos
+.env
+src/.env
+
+# Dependencias
+/vendor
+/node_modules
+
+# Laravel
+/src/vendor
+/src/storage/logs/*
+/src/storage/framework/*
+/src/bootstrap/cache/*.php
+
+# Docker (opcional)
+docker/mysql/data
+
+# OS
+.DS_Store
+Thumbs.db
