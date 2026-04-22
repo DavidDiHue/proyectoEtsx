@@ -3,11 +3,15 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
-Route::get('/', function () {
-    return view('welcome');
-});
+use Illuminate\Support\Facades\Auth;
+
+Route::get('/', [ProductController::class, 'publicIndex']);
 
 Route::get('/dashboard', function () {
+    if (Auth::user()->role === 'admin') {
+        return redirect('/admin');
+    }
+
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -18,7 +22,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth', 'admin'])->get('/admin', function () {
-    return "Bienvenido admin";
+    return view('admin.dashboard');
 });
 
 Route::middleware(['auth', 'admin'])->group(function () {

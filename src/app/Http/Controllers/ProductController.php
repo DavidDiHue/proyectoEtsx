@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 class ProductController extends Controller
 {
     //
+public function publicIndex()
+{
+    $products = \App\Models\Product::all();
+    return view('shop.index', compact('products'));
+}
     public function index()
 {
     $products = \App\Models\Product::all();
