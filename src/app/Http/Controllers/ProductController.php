@@ -51,4 +51,44 @@ public function destroy($id)
     return redirect('/products');
 }
 
+
+public function cart()
+{
+    $cart = session()->get('cart', []);
+    return view('shop.cart', compact('cart'));
+}
+
+public function addToCart($id)
+{
+    $product = \App\Models\Product::findOrFail($id);
+
+    $cart = session()->get('cart', []);
+
+    if(isset($cart[$id])) {
+        $cart[$id]['quantity']++;
+    } else {
+        $cart[$id] = [
+            "name" => $product->name,
+            "price" => $product->price,
+            "quantity" => 1
+        ];
+    }
+
+    session()->put('cart', $cart);
+
+    return redirect()->back();
+}
+
+public function removeFromCart($id)
+{
+    $cart = session()->get('cart', []);
+
+    if(isset($cart[$id])) {
+        unset($cart[$id]);
+        session()->put('cart', $cart);
+    }
+
+    return redirect()->back();
+}
+
 }
